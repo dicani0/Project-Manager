@@ -1,0 +1,56 @@
+<header class="px-6 bg-gray-900 flex flex-wrap items-center py-2">
+    <div class="flex-1 flex justify-between items-center mb-2 lg:mb-0">
+        <a href="#">
+            <svg id="Capa_1" enable-background="new 0 0 512 512" height="24" viewBox="0 0 512 512" width="24" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                    <path d="m187.432 271c-29.538 0-53.568 24.03-53.568 53.568v133.863c0 29.538 24.03 53.568 53.568 53.568 29.538.001 53.568-24.029 53.568-53.567v-133.864c0-29.538-24.03-53.568-53.568-53.568z" fill="#ff4340" />
+                    <path d="m103.863 271h-51.86c-28.596 0-51.86 23.265-51.86 51.86 0 28.596 23.265 51.86 51.86 51.86s51.86-23.265 51.86-51.86z" fill="#ff4340" />
+                    <path d="m0 187.432c0 29.538 24.03 53.568 53.568 53.568h133.863c29.539 0 53.569-24.03 53.569-53.568s-24.03-53.568-53.568-53.568h-133.864c-29.538-.001-53.568 24.03-53.568 53.568z" fill="#36c6ff" />
+                    <path d="m189.14 103.863h51.86v-51.86c0-28.596-23.265-51.86-51.86-51.86-28.596 0-51.86 23.265-51.86 51.86s23.264 51.86 51.86 51.86z" fill="#36c6ff" />
+                    <path d="m324.568 241c29.538 0 53.568-24.03 53.568-53.568v-133.864c.001-29.538-24.03-53.568-53.568-53.568s-53.568 24.03-53.568 53.568v133.863c0 29.539 24.03 53.569 53.568 53.569z" fill="#0dc46e" />
+                    <path d="m408.137 241h51.86c28.596 0 51.86-23.265 51.86-51.86 0-28.596-23.265-51.86-51.86-51.86s-51.86 23.265-51.86 51.86z" fill="#0dc46e" />
+                    <g fill="#fdcb02">
+                        <path d="m512 324.568c0-29.538-24.03-53.568-53.568-53.568h-133.864c-29.538 0-53.568 24.03-53.568 53.568s24.03 53.568 53.568 53.568h133.863c29.539.001 53.569-24.03 53.569-53.568z" />
+                        <path d="m322.86 408.137h-51.86v51.86c0 28.596 23.265 51.86 51.86 51.86 28.596 0 51.86-23.265 51.86-51.86s-23.264-51.86-51.86-51.86z" />
+                    </g>
+                </g>
+            </svg>
+        </a>
+    </div>
+    <label for="menu-toggle" class="point-cursor lg:hidden block">
+        <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 cursor-pointer" width="20" height="20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path fill="white" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z">
+                <title>Menu</title>
+            </path>
+        </svg>
+    </label>
+    <input type="checkbox" class="hidden" id="menu-toggle">
+    <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+        <nav>
+            <ul class="lg:flex items-center justify-between text-base">
+                <li>
+                    <a routerLink="auth" class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400">Auth</a>
+                </li>
+                <li>
+                    <a class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test</a>
+                </li>
+                <li>
+                    <a class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test</a>
+                </li>
+                <li>
+                    <a class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test</a>
+                </li>
+                <li>
+                    <div class="relative transition-all ease-in-out duration-500">
+                        <button id="dropdown" class="rounded-xl lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Dropdown</button>
+                        <div id="dropdown-menu" class="hidden absolute left-2 w-24 bg-gray-900 rounded-lg shadow-lg divide-y-2 divide-black ">
+                            <a href="" class="block py-2 px-4 hover:bg-cyan-500 rounded-t-lg">Test</a>
+                            <a href="" class="block py-2 px-4 hover:bg-cyan-500">Test</a>
+                            <a href="" class="block py-2 px-4 hover:bg-cyan-500 rounded-b-lg">Test</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
