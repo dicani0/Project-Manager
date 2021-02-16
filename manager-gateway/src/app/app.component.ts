@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { AuthService } from './auth/auth.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'manager-gateway';
+export class AppComponent implements OnInit {
+    title = 'manager-gateway';
+
+    constructor(private authService: AuthService) { }
+
+    ngOnInit() {
+        this.authService.autoLogin();
+    }
 }

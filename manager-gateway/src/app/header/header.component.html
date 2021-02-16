@@ -32,7 +32,7 @@
                     <a routerLink="auth" class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400">Auth</a>
                 </li>
                 <li>
-                    <a class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test</a>
+                    <button type="button" (click)="onTest()" class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test request</button>
                 </li>
                 <li>
                     <a class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test</a>
@@ -43,10 +43,10 @@
                 <li>
                     <div class="relative transition-all ease-in-out duration-500">
                         <button id="dropdown" class="rounded-xl lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Dropdown</button>
-                        <div id="dropdown-menu" class="hidden absolute left-2 w-24 bg-gray-900 rounded-lg shadow-lg divide-y-2 divide-black ">
-                            <a href="" class="block py-2 px-4 hover:bg-cyan-500 rounded-t-lg">Test</a>
+                        <div id="dropdown-menu" class="hidden absolute left-2 w-24 bg-gray-900 rounded-lg shadow-lg divide-y-2 divide-black">
+                            <a href="" class="block py-2 px-4 hover:bg-cyan-500 rounded-t-lg">Test request</a>
                             <a href="" class="block py-2 px-4 hover:bg-cyan-500">Test</a>
-                            <a href="" class="block py-2 px-4 hover:bg-cyan-500 rounded-b-lg">Test</a>
+                            <a *ngIf="isLoggedIn" (click)="logout()" class="block py-2 px-4 hover:bg-cyan-500 rounded-b-lg">Logout</a>
                         </div>
                     </div>
                 </li>
