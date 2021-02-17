@@ -9,11 +9,13 @@ import { AuthModule } from './auth/auth.module';
 import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
 import { TokenInterceptor } from './auth/token.interceptor';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        HeaderComponent
+        HeaderComponent,
+        DashboardComponent
     ],
     imports: [
         CommonModule,

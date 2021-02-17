@@ -1,0 +1,13 @@
+input{
+    color: black;
+}
+
+input.ng-invalid{
+    @apply border border-red-600;
+}
+input.ng-valid{
+    @apply border border-green-600;
+}
+button.ng-valid{
+    @apply cursor-pointer border border-pink-600;
+}

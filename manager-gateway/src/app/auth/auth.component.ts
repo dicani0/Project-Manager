@@ -14,7 +14,8 @@ export class AuthComponent implements OnInit {
     loginMode: boolean = true;
     isLoggedIn: boolean = false;
     userForm: any;
-    error: string;
+    registerForm: any;
+    error: string[] = [];
 
 
     constructor(private authService: AuthService, private fb: FormBuilder) {
@@ -23,8 +24,13 @@ export class AuthComponent implements OnInit {
             this.loginMode = false;
         }
         this.userForm = this.fb.group({
-            email: [''],
-            password: ['']
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required]
+        })
+        this.registerForm = this.fb.group({
+            username: ['', Validators.required],
+            email: ['', [Validators.email, Validators.required]],
+            password: ['', Validators.required]
         })
     }
 
@@ -39,16 +45,31 @@ export class AuthComponent implements OnInit {
             this.userForm.get('email').value,
             this.userForm.get('password').value
         ).subscribe(res => {
-            this.error = '';
+            this.error = [];
         },
             err => {
-                this.error = err.error.message;
+                this.error.push(err.error.message);
             })
 
     }
 
     onRegister() {
-        // this.authService
-    }
+        const username = this.registerForm.get('username').value;
+        const email = this.registerForm.get('email').value;
+        const password = this.registerForm.get('password').value;
+        this.authService.register(
+            username,
+            email,
+            password
+        ).subscribe(() => {
+            this.error = [''];
+            this.authService.login(email, password).subscribe()
+        },
+            error => {
+                this.error = this.error.concat(error.error.name);
+                this.error = this.error.concat(error.error.email);
+                this.error = this.error.concat(error.error.password);
+            });
 
+    }
 }

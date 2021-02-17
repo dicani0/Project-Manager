@@ -1,4 +1,4 @@
-<header class="px-6 bg-gray-900 flex flex-wrap items-center py-2">
+<header class="px-6 bg-gray-900 bg-opacity-80 flex flex-wrap items-center py-2">
     <div class="flex-1 flex justify-between items-center mb-2 lg:mb-0">
         <a href="#">
             <svg id="Capa_1" enable-background="new 0 0 512 512" height="24" viewBox="0 0 512 512" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -28,25 +28,36 @@
     <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
         <nav>
             <ul class="lg:flex items-center justify-between text-base">
-                <li>
-                    <a routerLink="auth" class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400">Auth</a>
+                <li *ngIf="!isLoggedIn" class="mx-2">
+                    <a routerLink="auth" class="line-bottom">Auth</a>
                 </li>
-                <li>
-                    <button type="button" (click)="onTest()" class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test request</button>
+                <li class="mx-2">
+                    <button type="button" (click)="onTest()" class="line-bottom w-full" href="#">Test request</button>
                 </li>
-                <li>
-                    <a class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test</a>
+                <li class="mx-2">
+                    <button type="button" class="line-bottom w-full">Test</button>
                 </li>
-                <li>
-                    <a class="border-b border-cyan-300 lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Test</a>
+                <li class="mx-2">
+                    <button type="button" class="line-bottom w-full">Test</button>
                 </li>
-                <li>
+                <li *ngIf="!!user">
                     <div class="relative transition-all ease-in-out duration-500">
-                        <button id="dropdown" class="rounded-xl lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out hover:bg-cyan-400" href="#">Dropdown</button>
-                        <div id="dropdown-menu" class="hidden absolute left-2 w-24 bg-gray-900 rounded-lg shadow-lg divide-y-2 divide-black">
+                        <button id="dropdown" class="rounded-xl lg:p-4 py-3 px-2 mx-1 flex transition duration-500 ease-in-out hover:bg-cyan-400" href="#">
+                            <svg version="1.1" fill="white" id="Capa_1" xmlns="http://www.w3.org/2000/svg" height="24px" xmlns:xlink="http://www.w3.org/1999/xlink" x="" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                                <path d="M437.02,330.98c-27.883-27.882-61.071-48.523-97.281-61.018C378.521,243.251,404,198.548,404,148
+			C404,66.393,337.607,0,256,0S108,66.393,108,148c0,50.548,25.479,95.251,64.262,121.962
+			c-36.21,12.495-69.398,33.136-97.281,61.018C26.629,379.333,0,443.62,0,512h40c0-119.103,96.897-216,216-216s216,96.897,216,216
+			h40C512,443.62,485.371,379.333,437.02,330.98z M256,256c-59.551,0-108-48.448-108-108S196.449,40,256,40
+			c59.551,0,108,48.448,108,108S315.551,256,256,256z" />
+                            </svg>
+                            <span>
+                                {{ user.name }}
+                            </span>
+                        </button>
+                        <div id="dropdown-menu" class="hidden absolute w-full bg-gray-900 rounded-lg shadow-lg divide-y-2 divide-black">
                             <a href="" class="block py-2 px-4 hover:bg-cyan-500 rounded-t-lg">Test request</a>
                             <a href="" class="block py-2 px-4 hover:bg-cyan-500">Test</a>
-                            <a *ngIf="isLoggedIn" (click)="logout()" class="block py-2 px-4 hover:bg-cyan-500 rounded-b-lg">Logout</a>
+                            <a *ngIf="isLoggedIn" (click)="logout()" class="cursor-pointer block py-2 px-4 hover:bg-cyan-500 rounded-b-lg">Logout</a>
                         </div>
                     </div>
                 </li>

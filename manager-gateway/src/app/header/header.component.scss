@@ -5,3 +5,10 @@
 .relative:hover #dropdown-menu{
     display: block;
 }
+
+.line-bottom{
+    @apply lg:p-4 py-3 px-2 mx-1 block transition duration-500 ease-in-out border-b-2 border-transparent border-white;
+    &:hover{
+        @apply border-cyan-600;
+    }
+}
