@@ -19,7 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('description');
             $table->dateTime('start_date');
             $table->dateTime('finish_date');
-            $table->foreignId('leader_id');
+            $table->foreignId('leader_id')->constrained('users');
             $table->timestamps();
         });
     }

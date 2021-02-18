@@ -3,9 +3,9 @@ export class User {
     public name: string;
     public email: string;
 
-    constructor(id: number, name: string, email: string) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
+    constructor(props: {}) {
+        this.id = props['id'] ?? null;
+        this.name = props['name'] ?? null;
+        this.email = props['email'] ?? null;
     }
 }

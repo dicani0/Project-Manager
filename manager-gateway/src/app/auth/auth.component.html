@@ -1,35 +1,37 @@
 <div class="w-100 border p-5 border-red-700 mb-4 text-center" *ngIf="error.length > 0">
     <p *ngFor="let err of error">{{ err }}</p>
 </div>
-<div class="flex-1 content-center" *ngIf="loginMode && !isLoggedIn">
-    <form [formGroup]="userForm" (submit)="onLogin()">
-        <div class="flex flex-col w-100 lg:w-2/6 text-center mx-auto border border-cyan-300 p-5 bg-gray-900 hover:border-green-400">
-            <h2 class="font-extrabold font-mono text-4xl mb-4">Login</h2>
-            <label class="mb-2" for="email">Email</label>
-            <input class="mb-2 px-3 text-black" type="text" formControlName="email" name="email" id="email">
-            <label class="mb-2" for="password">Password</label>
-            <input class="mb-2 px-3 text-black" type="password" formControlName="password" name="password" id="password">
-            <div class="flex content-between flex-row h-12">
-                <button [ngClass]="{'cursor-pointer' : userForm.valid, 'cursor-default' : userForm.invalid}" type="submit" [disabled]="userForm.invalid" class="block w-2/6 mx-auto bg-gray-700 text-white border-cyan-800">Submit</button>
-                <button *ngIf="!isLoggedIn" type="button" (click)="loginMode = !loginMode" class="block w-2/6 mx-auto bg-gray-500 text-white animate-pulse border-cyan-800">Switch to Register</button>
+<div class="flex align-middle mt-20">
+    <div class="flex flex-1 content-center" *ngIf="loginMode && !isLoggedIn">
+        <form class="flex-1" [formGroup]="userForm" (submit)="onLogin()">
+            <div class="flex flex-col w-100 md:w-1/2 xl:w-2/6 text-center mx-auto border border-cyan-300 p-5 bg-gray-900 hover:border-green-400">
+                <h2 class="font-extrabold font-mono text-4xl mb-4">Login</h2>
+                <label class="mb-2" for="email">Email</label>
+                <input class="mb-2 px-3 text-black" type="text" formControlName="email" name="email" id="email">
+                <label class="mb-2" for="password">Password</label>
+                <input class="mb-2 px-3 text-black" type="password" formControlName="password" name="password" id="password">
+                <div class="flex content-between flex-row h-12">
+                    <button [ngClass]="{'cursor-pointer' : userForm.valid, 'cursor-default' : userForm.invalid}" type="submit" [disabled]="userForm.invalid" class="block w-2/6 mx-auto bg-gray-700 text-white border-cyan-800">Submit</button>
+                    <button *ngIf="!isLoggedIn" type="button" (click)="loginMode = !loginMode" class="block w-2/6 mx-auto bg-gray-500 text-white animate-pulse border-cyan-800">Switch to Register</button>
+                </div>
             </div>
-        </div>
-    </form>
-</div>
-<div class="flex-1 content-center" *ngIf="!loginMode && !isLoggedIn">
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-        <div class="flex flex-col w-100 lg:w-2/6 text-center mx-auto border border-cyan-300 p-5 bg-gray-900 hover:border-green-400">
-            <h2 class="font-extrabold font-mono text-4xl mb-4">Register</h2>
-            <label class="mb-2" for="email">Username</label>
-            <input class="mb-2 px-3" type="text" formControlName="username" name="username" id="username">
-            <label class="mb-2" for="email">Email</label>
-            <input class="mb-2 px-3" type="text" formControlName="email" name="email" id="email">
-            <label class="mb-2" for="password">Password</label>
-            <input class="mb-2 px-3" type="password" formControlName="password" name="password" id="password">
-            <div class="flex flex-row content-between h-12">
-                <button [ngClass]="{'cursor-pointer' : registerForm.valid, 'cursor-default' : registerForm.invalid}" type="submit" [disabled]="!registerForm.valid" class="block w-2/6 mx-auto bg-gray-700 text-white animate-pulse border-cyan-800">Submit</button>
-                <button type="button" (click)="loginMode = !loginMode" class="block w-2/6 mx-auto bg-gray-500 text-white animate-pulse border-cyan-800">Switch to Login</button>
+        </form>
+    </div>
+    <div class="flex-1 content-center" *ngIf="!loginMode && !isLoggedIn">
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+            <div class="flex flex-col w-100 lg:w-2/6 text-center mx-auto border border-cyan-300 p-5 bg-gray-900 hover:border-green-400">
+                <h2 class="font-extrabold font-mono text-4xl mb-4">Register</h2>
+                <label class="mb-2" for="email">Username</label>
+                <input class="mb-2 px-3" type="text" formControlName="username" name="username" id="username">
+                <label class="mb-2" for="email">Email</label>
+                <input class="mb-2 px-3" type="text" formControlName="email" name="email" id="email">
+                <label class="mb-2" for="password">Password</label>
+                <input class="mb-2 px-3" type="password" formControlName="password" name="password" id="password">
+                <div class="flex flex-row content-between h-12">
+                    <button [ngClass]="{'cursor-pointer' : registerForm.valid, 'cursor-default' : registerForm.invalid}" type="submit" [disabled]="!registerForm.valid" class="block w-2/6 mx-auto bg-gray-700 text-white animate-pulse border-cyan-800">Submit</button>
+                    <button type="button" (click)="loginMode = !loginMode" class="block w-2/6 mx-auto bg-gray-500 text-white animate-pulse border-cyan-800">Switch to Login</button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

@@ -10,12 +10,18 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProjectComponent } from './project/project.component';
+import { TeamComponent } from './team/team.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
-        DashboardComponent
+        DashboardComponent,
+        ProjectComponent,
+        TeamComponent,
+        SpinnerComponent
     ],
     imports: [
         CommonModule,

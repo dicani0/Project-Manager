@@ -1,5 +1,5 @@
-<header class="px-6 bg-gray-900 bg-opacity-80 flex flex-wrap items-center py-2">
-    <div class="flex-1 flex justify-between items-center mb-2 lg:mb-0">
+<header class="px-6 py-4 bg-gray-900 bg-opacity-80 hover:bg-opacity-100 flex flex-wrap items-center transition-all duration-300 border-b-2 border-cyan-600">
+    <div class="flex-1 flex items-center mb-2 lg:mb-0">
         <a href="#">
             <svg id="Capa_1" enable-background="new 0 0 512 512" height="24" viewBox="0 0 512 512" width="24" xmlns="http://www.w3.org/2000/svg">
                 <g>
@@ -16,6 +16,9 @@
                 </g>
             </svg>
         </a>
+        <div class="mx-2">
+            <button type="button" routerLink="/dashboard" routerLinkActive="border-transparent ring-4 ring-cyan-500" class="line-bottom w-full" href="#">Dashboard</button>
+        </div>
     </div>
     <label for="menu-toggle" class="point-cursor lg:hidden block">
         <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 cursor-pointer" width="20" height="20" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -29,18 +32,20 @@
         <nav>
             <ul class="lg:flex items-center justify-between text-base">
                 <li *ngIf="!isLoggedIn" class="mx-2">
-                    <a routerLink="auth" class="line-bottom">Auth</a>
+                    <button type="button" routerLink="auth" outerLinkActive="border-transparent ring-4 ring-cyan-500 border-0 border-transparent" class="line-bottom w-full">Auth</button>
                 </li>
-                <li class="mx-2">
-                    <button type="button" (click)="onTest()" class="line-bottom w-full" href="#">Test request</button>
-                </li>
-                <li class="mx-2">
-                    <button type="button" class="line-bottom w-full">Test</button>
-                </li>
-                <li class="mx-2">
-                    <button type="button" class="line-bottom w-full">Test</button>
-                </li>
-                <li *ngIf="!!user">
+                <div class="flex" *ngIf="isLoggedIn">
+                    <li class="mx-2">
+                        <button type="button" routerLink="/teams" routerLinkActive="border-transparent ring-4 ring-cyan-500 border-0 border-transparent" class="line-bottom w-full">Teams</button>
+                    </li>
+                    <li class="mx-2">
+                        <button type="button" routerLink="/projects" routerLinkActive="border-transparent ring-4 ring-cyan-500" class="line-bottom w-full">Projects</button>
+                    </li>
+                    <li class="mx-2">
+                        <button type="button" class="line-bottom w-full">Test</button>
+                    </li>
+                </div>
+                <li class="items-center" *ngIf="!!user">
                     <div class="relative transition-all ease-in-out duration-500">
                         <button id="dropdown" class="rounded-xl lg:p-4 py-3 px-2 mx-1 flex transition duration-500 ease-in-out hover:bg-cyan-400" href="#">
                             <svg version="1.1" fill="white" id="Capa_1" xmlns="http://www.w3.org/2000/svg" height="24px" xmlns:xlink="http://www.w3.org/1999/xlink" x="" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">

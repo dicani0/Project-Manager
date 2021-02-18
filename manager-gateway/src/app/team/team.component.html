@@ -1,0 +1,31 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div *ngIf="!isLoading" class="flex flex-col mt-5 items-center justify-between">
+    <button type="button" (click)="addMode = !addMode" class="bg-gray-900 bg-opacity-75 ring-4 ring-cyan-600 w-1/4 h-20 mx-auto">Add Team</button>
+    <div class="mt-12 grid grid-cols-3 gap-24 w-full">
+        <div class="cursor-pointer text-center ring-2 ring-white w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 opacity-80 p-4 duration-300 animate-pulse transform hover:scale-125 hover:opacity-100 hover:animate-none" *ngFor="let team of teams">
+            <div class="flex flex-row justify-between px-5">
+                <h3 class="font-extrabold text-2xl w-1/3 uppercase">{{ team.name }}</h3>
+                <div>
+                    <p>{{ team.leader.name }}</p>
+                    <p>{{ team.leader.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div (click)="clickedOut($event)" *ngIf="addMode" class="absolute h-screen w-full bg-gray-900 bg-opacity-80 top-0 left-0" id="modal-form">
+    <div class="rounded-2xl relative h-1/2 w-1/4 left-1/2 top-1/4 transform -translate-x-1/2 p-10 border-2 border-cyan-400 animated-bg">
+        <button (click)="addMode = !addMode" class="absolute -right-14 -top-8 transform bg-gray-900 -translate-x-1/2 rounded-full border-white border-2 h-14 w-14 items-center justify-center text-red-800 font-extrabold text-xl hover:bg-gray-600 duration-300 active:outline-none focus:outline-none outline-none">X</button>
+        <form class="h-full">
+            <div class="flex flex-col xl:flex-row justify-between mb-4">
+                <label for="name">Project name</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div class="flex flex-col xl:flex-row justify-between">
+                <label for="leader">Leader</label>
+                <input type="text" name="leader" id="leader">
+            </div>
+        </form>
+    </div>
+</div>

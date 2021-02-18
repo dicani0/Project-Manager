@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-    constructor(public authService: AuthService) { }
+    constructor() { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         request = request.clone({
