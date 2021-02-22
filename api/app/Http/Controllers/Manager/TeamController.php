@@ -15,7 +15,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::all()->load('leader');
+        $teams = Team::all()->load('leader')->load('members');
         return response()->json($teams);
     }
 
@@ -27,7 +27,12 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $team = Team::create([
+            'name' => $request->name,
+            'user_id' => $request->leader
+        ]);
+        $team->members()->sync($request->members);
+        return response()->json();
     }
 
     /**
@@ -50,7 +55,13 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
-        //
+        $team = Team::find($request->id);
+        $team->update([
+            'name' => $request->name,
+            'user_id' => $request->leader
+        ]);
+        $team->members()->sync($request->members);
+        return response()->json();
     }
 
     /**

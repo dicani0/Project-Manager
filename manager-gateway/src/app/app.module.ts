@@ -11,8 +11,8 @@ import { AuthService } from './auth/auth.service';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectComponent } from './project/project.component';
-import { TeamComponent } from './team/team.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { TeamModule } from './team/team.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -20,8 +20,6 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
         HeaderComponent,
         DashboardComponent,
         ProjectComponent,
-        TeamComponent,
-        SpinnerComponent
     ],
     imports: [
         CommonModule,
@@ -29,6 +27,8 @@ import { SpinnerComponent } from './shared/spinner/spinner.component';
         AppRoutingModule,
         HttpClientModule,
         AuthModule,
+        TeamModule,
+        SharedModule
     ],
     providers: [
         AuthService,

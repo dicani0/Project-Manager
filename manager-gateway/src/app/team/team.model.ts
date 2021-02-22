@@ -1,20 +1,22 @@
 import { User } from "../auth/user.model";
 
 export class Team {
+    public id: number;
     public name: string;
-    public users: User[];
+    public members: User[];
     public leader: User;
 
     constructor(props: {}) {
+        this.id = props['id'] ?? null;
         this.name = props['name'] ?? null;
         this.leader = new User(props['leader'] ?? {});
 
-        const users = props['users'] ?? [];
+        const members = props['members'] ?? [];
+        console.log(props);
 
-        this.users = [];
-
-        for (const userKey in users) {
-            this.users.push(new User(users[userKey]));
+        this.members = [];
+        for (const userKey in members) {
+            this.members.push(new User(members[userKey]));
         }
     }
 }

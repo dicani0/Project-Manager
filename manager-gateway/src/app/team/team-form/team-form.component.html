@@ -1,0 +1,22 @@
+<div (click)="clickedOut($event)" class="absolute h-screen w-full bg-gray-900 bg-opacity-80 top-0 left-0" id="modal-form">
+    <div class="rounded-2xl relative h-1/2 w-1/4 left-1/2 top-1/4 transform -translate-x-1/2 p-10 border-2 border-cyan-400 animated-bg">
+        <button (click)="close()" class="absolute -right-14 -top-8 transform bg-gray-900 -translate-x-1/2 rounded-full border-white border-2 h-14 w-14 items-center justify-center text-red-800 font-extrabold text-xl hover:bg-gray-600 duration-300 active:outline-none focus:outline-none outline-none">X</button>
+        <form class="h-full" [formGroup]="teamForm" (submit)="onStoreTeam()">
+            <div class="flex flex-col xl:flex-row justify-between mb-4">
+                <label for="name">Project name</label>
+                <input class="p-2" autofocus type="text" formControlName="name" name="name" id="name">
+            </div>
+            <div class="flex flex-col xl:flex-row justify-between mb-4">
+                <label for="leader">Leader</label>
+                <ng-select style="width: 190px; color:black;" [multiple]="false" formControlName="leader" bindLabel="name" bindValue="id" [items]="users | async">
+                </ng-select>
+            </div>
+            <div class="flex flex-col xl:flex-row justify-between mb-8">
+                <label for="leader">Members</label>
+                <ng-select style="width: 190px; color:black;" [multiple]="true" formControlName="users" bindLabel="name" bindValue="id" [items]="users | async">
+                </ng-select>
+            </div>
+            <button type="submit" class="block w-2/6 mx-auto bg-gray-700 text-white ring-2 ring-white">Add</button>
+        </form>
+    </div>
+</div>

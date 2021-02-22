@@ -1,0 +1,40 @@
+<div class="absolute h-full w-full bg-gray-900 bg-opacity-80 top-0 left-0" id="modal-form">
+    <div class="rounded-2xl relative w-1/4 left-1/2 top-1/4 transform -translate-x-1/2 p-10 border-2 border-cyan-400 animated-bg">
+        <button (click)="close()" class="absolute -right-14 -top-8 transform bg-gray-900 -translate-x-1/2 rounded-full border-white border-2 h-14 w-14 items-center justify-center text-red-800 font-extrabold text-xl hover:bg-gray-600 duration-300 active:outline-none focus:outline-none outline-none">X</button>
+        <div class="font-mono text-3xl font-black mb-4 flex justify-between items-center">
+            {{ chosenTeam.name }}
+            <button class="p-4 bg-gray-900 text-xl rounded-full border-2 border-cyan-400 outline-none focus:outline-none focus:border-cyan-900">Edit</button>
+        </div>
+        <h4 class="font-semibold text-xl mb-2">
+            Leader: {{ chosenTeam.leader.name }} <span class="italic">{{ chosenTeam.leader.email }}</span>
+        </h4>
+        <div class="border-b-2 border-cyan-400">
+            <h5>Members:</h5>
+            <p class="italic " *ngFor="let member of chosenTeam.members">{{ member.name }}</p>
+        </div>
+        <div class="pt-6">
+            <h5>Projects</h5>
+        </div>
+
+        <div *ngIf="true">
+            <form class="h-full" [formGroup]="editForm" *ngIf="!isLoading" (submit)="onUpdate()">
+                <div class="flex flex-col xl:flex-row justify-between mb-4">
+                    <label for="name">Project name</label>
+                    <input class="p-2" autofocus type="text" formControlName="name" name="name" id="name">
+                </div>
+                <div class="flex flex-col xl:flex-row justify-between mb-4">
+                    <label for="leader">Leader</label>
+                    <ng-select style="width: 190px; color:black;" [multiple]="false" formControlName="leader" bindLabel="name" bindValue="id" [items]="users | async">
+                    </ng-select>
+                </div>
+                <div class="flex flex-col xl:flex-row justify-between mb-8">
+                    <label for="leader">Members</label>
+                    <ng-select style="width: 190px; color:black;" [multiple]="true" formControlName="users" bindLabel="name" bindValue="id" [items]="users | async">
+                    </ng-select>
+                </div>
+                <button type="submit" class="block w-2/6 mx-auto bg-gray-700 text-white ring-2 ring-white">Save</button>
+            </form>
+        </div>
+
+    </div>
+</div>

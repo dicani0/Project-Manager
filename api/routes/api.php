@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Manager\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('teams', [TeamController::class, 'index']);
+    Route::post('teams/store', [TeamController::class, 'store']);
+    Route::put('teams/update', [TeamController::class, 'update']);
+    Route::get('users', [UserController::class, 'index']);
 });
 
 

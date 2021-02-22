@@ -22,7 +22,7 @@ export class AuthService {
                 catchError(err => throwError(err)),
                 tap(
                     data => {
-                        this.loadedUser = new User(data.user.id, data.user.name, data.user.email);
+                        this.loadedUser = new User(data);
                         localStorage.setItem('apiToken', data.token);
                         localStorage.setItem('user', JSON.stringify(data.user));
                         this.isLoggedIn.next(true);
