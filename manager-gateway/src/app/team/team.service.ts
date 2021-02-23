@@ -11,24 +11,22 @@ import { Team } from './team.model';
 export class TeamService {
     chosenTeam = new BehaviorSubject<Team>(null);
     addMode = new Subject<boolean>();
-    teams = new Subject<Team[]>();
-    teamss: Team[];
+    teams$ = new Subject<Team[]>();
+    teams: Team[];
 
     constructor(private http: HttpClient) { }
 
     getTeams() {
-        return this.http.get<Team[]>(environment.baseUrl + 'teams')
+        this.http.get<Team[]>(environment.baseUrl + 'teams')
             .pipe(
                 map(
                     teams => teams.map(
                         team => new Team(team))
                 )
-            );
-    }
-
-    passTeams() {
-        this.getTeams().subscribe();
-        this.teams.next(this.teamss);
+            ).subscribe(teams => {
+                this.teams = teams.slice();
+                this.teams$.next(this.teams);
+            });
     }
 
     chooseTeam(team: Team) {
@@ -44,16 +42,24 @@ export class TeamService {
             name: name,
             leader: leader,
             members: members
-        }).subscribe();
+        }).subscribe((team) => {
+            this.teams.push(new Team(team));
+            this.teams$.next(this.teams);
+        });
+
     }
 
     updateTeam(id: number, name: string, leader: number, members: number[]) {
+        console.log(members);
         this.http.put(environment.baseUrl + 'teams/update', {
             id: id,
             name: name,
             leader: leader,
             members: members
-        }).subscribe();
+        }).subscribe(team => {
+            this.getTeams();
+            this.teams$.next(this.teams);
+        });
     }
 
     setAddMode() {

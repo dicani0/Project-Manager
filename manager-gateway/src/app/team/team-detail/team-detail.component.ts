@@ -24,6 +24,9 @@ export class TeamDetailComponent implements OnInit {
 
     ngOnInit(): void {
         this.teamService.chosenTeam.subscribe(team => {
+            if (!team) {
+                return;
+            }
             this.chosenTeam = team;
             this.users = this.userService.getAllUsers();
             let usersIds = [];
@@ -40,7 +43,13 @@ export class TeamDetailComponent implements OnInit {
     }
 
     onUpdate() {
-        this.teamService.updateTeam(this.chosenTeam.id, this.editForm.value.name, this.editForm.value.leader, this.editForm.value.members)
+        this.teamService.updateTeam(this.chosenTeam.id, this.editForm.value.name, this.editForm.value.leader, this.editForm.value.users)
+    }
+
+    clickedOut(event) {
+        if (event.target.id === "modal-form") {
+            this.close();
+        }
     }
 
     close() {

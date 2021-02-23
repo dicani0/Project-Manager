@@ -32,7 +32,7 @@ class TeamController extends Controller
             'user_id' => $request->leader
         ]);
         $team->members()->sync($request->members);
-        return response()->json();
+        return response()->json($team->load('leader')->load('members'));
     }
 
     /**
@@ -61,7 +61,7 @@ class TeamController extends Controller
             'user_id' => $request->leader
         ]);
         $team->members()->sync($request->members);
-        return response()->json();
+        return response()->json($team->load('leader')->load('members'));
     }
 
     /**

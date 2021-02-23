@@ -19,14 +19,23 @@ export class TeamComponent implements OnInit {
 
         this.isLoading = true;
         this.addMode = false;
-        this.teamService.getTeams().subscribe(teams => {
+
+        this.teamService.teams$.subscribe(teams => {
             this.teams = teams;
-            this.isLoading = false;
+            this.isLoading = false
+        })
+
+        this.teamService.teams$.subscribe(teams => {
+            this.teams = teams;
         });
+
         this.teamService.addMode.subscribe(mode => {
             this.addMode = mode;
         })
+
         this.teamService.chosenTeam.subscribe(team => this.chosenTeam = team);
+
+        this.teamService.getTeams();
     }
 
     showDetails(id: number) {

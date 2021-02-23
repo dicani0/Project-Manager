@@ -12,7 +12,6 @@ export class Team {
         this.leader = new User(props['leader'] ?? {});
 
         const members = props['members'] ?? [];
-        console.log(props);
 
         this.members = [];
         for (const userKey in members) {
