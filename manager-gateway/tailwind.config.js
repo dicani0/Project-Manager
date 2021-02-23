@@ -14,6 +14,7 @@ module.exports = {
         extend: {
             ringWidth: ['hover'],
             ringColor: ['hover'],
+            borderWidth: ["hover"],
         },
     },
     plugins: [],

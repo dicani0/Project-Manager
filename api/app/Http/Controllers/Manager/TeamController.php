@@ -29,7 +29,7 @@ class TeamController extends Controller
     {
         $team = Team::create([
             'name' => $request->name,
-            'user_id' => $request->leader
+            'leader_id' => $request->leader
         ]);
         $team->members()->sync($request->members);
         return response()->json($team->load('leader')->load('members'));
@@ -58,7 +58,7 @@ class TeamController extends Controller
         $team = Team::find($request->id);
         $team->update([
             'name' => $request->name,
-            'user_id' => $request->leader
+            'leader_id' => $request->leader
         ]);
         $team->members()->sync($request->members);
         return response()->json($team->load('leader')->load('members'));

@@ -10,16 +10,15 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from './auth/auth.service';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProjectComponent } from './project/project.component';
 import { TeamModule } from './team/team.module';
 import { SharedModule } from './shared/shared.module';
+import { ProjectModule } from './project/project.module';
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
-        DashboardComponent,
-        ProjectComponent,
+        DashboardComponent
     ],
     imports: [
         CommonModule,
@@ -28,7 +27,8 @@ import { SharedModule } from './shared/shared.module';
         HttpClientModule,
         AuthModule,
         TeamModule,
-        SharedModule
+        SharedModule,
+        ProjectModule
     ],
     providers: [
         AuthService,

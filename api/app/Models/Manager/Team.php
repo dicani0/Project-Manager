@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Team extends Model
 {
-    protected $guarded = [];
-
     use HasFactory;
+
+    protected $guarded = [];
+    protected $with = ['leader', 'members'];
 
     public function leader()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'leader_id');
     }
 
     public function members()
