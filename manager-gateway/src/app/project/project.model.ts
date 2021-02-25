@@ -5,16 +5,16 @@ export class Project {
     id: number;
     name: string;
     description: string;
-    startDate;
-    finishDate;
+    startDate: moment.Moment;
+    finishDate: moment.Moment;
     team: Team;
 
     constructor(props) {
         this.id = props['id'];
         this.name = props['name'];
         this.description = props['description'];
-        this.startDate = moment(props['start_date']).format('DD-MM-YYYY H:m');
-        this.finishDate = moment(props['start_date']).format('DD-MM-YYYY H:m');
+        this.startDate = moment(props['start_date']);
+        this.finishDate = moment(props['start_date']);
         this.team = new Team(props['team']);
     }
 }

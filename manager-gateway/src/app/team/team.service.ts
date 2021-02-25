@@ -50,7 +50,6 @@ export class TeamService {
     }
 
     updateTeam(id: number, name: string, leader: number, members: number[]) {
-        console.log(members);
         this.http.put(environment.baseUrl + 'teams/update', {
             id: id,
             name: name,

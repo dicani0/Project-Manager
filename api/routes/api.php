@@ -33,8 +33,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('teams/store', [TeamController::class, 'store']);
     Route::put('teams/update', [TeamController::class, 'update']);
 
+
     Route::get('projects', [ProjectController::class, 'index']);
-    Route::get('projects/{id}', [ProjectController::class, 'show']);
+    Route::patch('projects/update', [ProjectController::class, 'update']);
+    Route::get('projects/{id}', [ProjectController::class, 'show'])->where('id', '[0-9]+');
 });
 
 

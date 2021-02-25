@@ -10,12 +10,15 @@ import { ProjectService } from './project.service';
 export class ProjectComponent implements OnInit {
 
     projects: Project[];
+    isLoading: boolean;
 
     constructor(private projectService: ProjectService) { }
 
     ngOnInit(): void {
+        this.isLoading = true;
         this.projectService.projects$.subscribe(projects => {
-            this.projects = projects
+            this.projects = projects;
+            this.isLoading = false;
         });
         this.projectService.getProjects();
     }

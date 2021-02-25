@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Moment } from 'moment';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -29,13 +30,22 @@ export class ProjectService {
     }
 
     getProject(id: number) {
-        console.log(environment.baseUrl + 'projects/' + id);
         return this.http.get<Project>(environment.baseUrl + 'projects/' + id)
             .pipe(
                 map(project => {
-                    console.log(project);
                     return new Project(project)
                 })
             );
+    }
+
+    updateProject(id: number, name: string, description: string, teamId: number, sDate: Moment, fDate: Moment) {
+        this.http.patch(environment.baseUrl + 'projects/update', {
+            id: id,
+            name: name,
+            description: description,
+            team: teamId,
+            start_date: sDate.format('YYYY-MM-DD HH:mm'),
+            finish_date: fDate.format('YYYY-MM-DD HH:mm')
+        }).subscribe(res => console.log(res));
     }
 }

@@ -1,1 +1,38 @@
-<p class="text-4xl">Dynamiczna nazwa: <span class="italic">{{ project.name }}</span></p>
+<app-mini-spinner *ngIf="isLoading"></app-mini-spinner>
+<div *ngIf="!isLoading" class="bg-gray-900 bg-opacity-95 mt-16 p-5 border-2 border-white rounded-lg">
+
+    <div class="flex justify-between">
+        <h3 class="text-4xl mb-8 font-mono">{{ project.name }}</h3>
+        <button class="p-4 bg-gray-900 text-xl rounded-full border-2 border-cyan-400 outline-none focus:outline-none focus:border-cyan-900">Edit</button>
+    </div>
+
+    <div class="mb-4">
+        <div>
+            <h4 class="text-3xl mb-2 italic font-mono">Details: </h4>
+            <p>
+                Description: {{ project.description }}
+            </p>
+            <p>
+                Assigned to: {{ project.team.name }}
+            </p>
+            <p>
+                Project leader: {{ project.team.leader.name }}
+            </p>
+        </div>
+    </div>
+    <div>
+        <h4 class="text-3xl mb-2 italic font-mono">Estimated time frame</h4>
+        <p>
+            {{ project.startDate.format('DD-MM-YYYY HH:mm') }} - {{ project.finishDate.format('DD-MM-YYYY HH:mm') }}
+        </p>
+
+        <h5 class="text-2xl mb-2 italic">Members</h5>
+        <p *ngFor="let member of project.team.members">
+            {{ member.name }} {{ member.email }}
+        </p>
+    </div>
+
+    <div>
+        <app-project-form [project]="project"></app-project-form>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+<form (submit)="onSave()" [formGroup]="editForm" class="flex flex-col mx-auto">
+    <label for="name">Name</label>
+    <input formControlName="name" type="text" name="name" class="p-2">
+    <label for="description">Description</label>
+    <input formControlName="description" type="text" name="description" class="p-2">
+    <label for="team">Team</label>
+    <ng-select formControlName="team" bindLabel="name" bindValue="id" [items]="teams"></ng-select>
+    <div class="flex justify-between">
+        <div>
+            <label for="start_date">Date of project start</label>
+            <input type="date" formControlName="start_date" name="start_date" id="start_date">
+        </div>
+        <div>
+            <label for="start_date">Estimated date of project finish</label>
+            <input type="date" formControlName="finish_date" name="finish_date" id="finish_date">
+
+        </div>
+    </div>
+    <button type="submit" class="block w-2/6 mx-auto bg-gray-700 text-white ring-2 ring-white mt-4">Save</button>
+</form>
