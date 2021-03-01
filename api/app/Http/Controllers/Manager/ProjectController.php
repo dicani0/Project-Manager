@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return response()->json(Project::all());
+        return response()->json(Project::all()->load('team'));
     }
 
     /**
@@ -37,7 +37,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return response()->json(Project::find($id));
+        return response()->json(Project::find($id)->load('team'));
     }
 
     /**

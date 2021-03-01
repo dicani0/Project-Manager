@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { TeamService } from 'src/app/team/team.service';
 import { Project } from '../project.model';
 import { ProjectService } from '../project.service';
@@ -14,19 +15,19 @@ export class ProjectDetailsComponent implements OnInit {
     private sub: any;
     project: Project;
     isLoading: boolean = false;
+    editMode: boolean;
 
     constructor(private route: ActivatedRoute, private projectService: ProjectService) { }
 
     ngOnInit(): void {
+        this.editMode = false;
         this.sub = this.route.params.subscribe(params => {
             this.isLoading = true;
             this.id = +params['id'];
             this.projectService.getProject(this.id).subscribe(project => {
                 this.project = project;
                 this.isLoading = false;
-                console.log(project)
             });
-        })
+        });
     }
-
 }

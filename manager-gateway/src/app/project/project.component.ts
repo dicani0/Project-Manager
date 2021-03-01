@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { finalize, tap } from 'rxjs/operators';
 import { Project } from './project.model';
 import { ProjectService } from './project.service';
 
@@ -15,12 +16,23 @@ export class ProjectComponent implements OnInit {
     constructor(private projectService: ProjectService) { }
 
     ngOnInit(): void {
-        this.isLoading = true;
-        this.projectService.projects$.subscribe(projects => {
-            this.projects = projects;
-            this.isLoading = false;
-        });
-        this.projectService.getProjects();
+        this.loadProjects();
+
+        this.projectService.updatedEventEmitter()
+            .subscribe(() => {
+                this.loadProjects();
+            });
     }
 
+    loadProjects() {
+        this.isLoading = true;
+
+        this.projectService.getProjects()
+            .pipe(
+                finalize(() => this.isLoading = false)
+            )
+            .subscribe(projects => {
+                this.projects = projects;
+            });
+    }
 }

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
 import { Team } from 'src/app/team/team.model';
 import { TeamService } from 'src/app/team/team.service';
 import { Project } from '../project.model';
@@ -26,8 +27,8 @@ export class ProjectFormComponent implements OnInit {
             name: [this.project.name],
             description: [this.project.description],
             team: [this.project.team.id],
-            start_date: [this.project.startDate.format('DD-MM-YYYY HH:mm')],
-            finish_date: [this.project.finishDate]
+            start_date: [this.project.startDate.format('YYYY-MM-DD[T]HH:mm')],
+            finish_date: [this.project.finishDate.format('YYYY-MM-DD[T]HH:mm')]
         });
     }
 
@@ -37,8 +38,8 @@ export class ProjectFormComponent implements OnInit {
             this.editForm.value.name,
             this.editForm.value.description,
             this.editForm.value.team,
-            this.editForm.value.start_date,
-            this.editForm.value.finish_date);
+            moment(this.editForm.value.start_date),
+            moment(this.editForm.value.finish_date));
     }
 
 }

@@ -6,14 +6,13 @@
     <label for="team">Team</label>
     <ng-select formControlName="team" bindLabel="name" bindValue="id" [items]="teams"></ng-select>
     <div class="flex justify-between">
-        <div>
+        <div class="">
             <label for="start_date">Date of project start</label>
-            <input type="date" formControlName="start_date" name="start_date" id="start_date">
+            <input type="datetime-local" step="3600" formControlName="start_date" name="start_date" id="start_date">
         </div>
-        <div>
+        <div class="">
             <label for="start_date">Estimated date of project finish</label>
-            <input type="date" formControlName="finish_date" name="finish_date" id="finish_date">
-
+            <input type="datetime-local" formControlName="finish_date" name="finish_date" id="finish_date">
         </div>
     </div>
     <button type="submit" class="block w-2/6 mx-auto bg-gray-700 text-white ring-2 ring-white mt-4">Save</button>

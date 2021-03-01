@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Moment } from 'moment';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Project } from './project.model';
@@ -11,22 +11,20 @@ import { Project } from './project.model';
 })
 export class ProjectService {
     projects: Project[];
-    projects$ = new Subject<Project[]>();
+    eventEmitter$ = new Subject<Observable<Project[]>>();
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        this.projects = [];
+    }
 
     getProjects() {
-        this.http.get<Project[]>(environment.baseUrl + 'projects')
+        return this.http.get<Project[]>(environment.baseUrl + 'projects')
             .pipe(
                 map(
                     projects => projects.map(
                         project => new Project(project)
                     )
-                ))
-            .subscribe(projects => {
-                this.projects = projects;
-                this.projects$.next(this.projects);
-            });
+                ));
     }
 
     getProject(id: number) {
@@ -39,13 +37,22 @@ export class ProjectService {
     }
 
     updateProject(id: number, name: string, description: string, teamId: number, sDate: Moment, fDate: Moment) {
-        this.http.patch(environment.baseUrl + 'projects/update', {
+        this.http.patch<Project>(environment.baseUrl + 'projects/update', {
             id: id,
             name: name,
             description: description,
             team: teamId,
             start_date: sDate.format('YYYY-MM-DD HH:mm'),
             finish_date: fDate.format('YYYY-MM-DD HH:mm')
-        }).subscribe(res => console.log(res));
+        })
+            .subscribe(() => this.projectUpdated());
+    }
+
+    updatedEventEmitter() {
+        return this.eventEmitter$;
+    }
+
+    projectUpdated() {
+        this.eventEmitter$.next();
     }
 }

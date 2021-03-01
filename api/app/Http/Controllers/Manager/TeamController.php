@@ -15,7 +15,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::all()->load('leader')->load('members');
+        $teams = Team::all()->load('leader')->load('members')->load('projects');
         return response()->json($teams);
     }
 

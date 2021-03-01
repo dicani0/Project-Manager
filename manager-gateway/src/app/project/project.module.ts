@@ -8,14 +8,14 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProjectFormComponent } from './project-form/project-form.component';
-
-
+import { ProjectViewComponent } from './project-view/project-view.component';
 
 @NgModule({
     declarations: [
         ProjectComponent,
         ProjectDetailsComponent,
-        ProjectFormComponent
+        ProjectFormComponent,
+        ProjectViewComponent
     ],
     imports: [
         CommonModule,
@@ -24,7 +24,7 @@ import { ProjectFormComponent } from './project-form/project-form.component';
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
-        NgSelectModule
+        NgSelectModule,
     ]
 })
 export class ProjectModule { }

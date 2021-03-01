@@ -20,10 +20,13 @@ export class TeamService {
         this.http.get<Team[]>(environment.baseUrl + 'teams')
             .pipe(
                 map(
-                    teams => teams.map(
-                        team => new Team(team))
+                    teams => {
+                        return teams.map(
+                            team => new Team(team))
+                    }
                 )
             ).subscribe(teams => {
+                console.log(teams);
                 this.teams = teams.slice();
                 this.teams$.next(this.teams);
             });

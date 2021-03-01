@@ -9,12 +9,12 @@ export class Project {
     finishDate: moment.Moment;
     team: Team;
 
-    constructor(props) {
+    constructor(props, flag: boolean = true) {
         this.id = props['id'];
         this.name = props['name'];
         this.description = props['description'];
         this.startDate = moment(props['start_date']);
         this.finishDate = moment(props['start_date']);
-        this.team = new Team(props['team']);
+        this.team = flag ? new Team(props['team'], false) : props['team'];
     }
 }
