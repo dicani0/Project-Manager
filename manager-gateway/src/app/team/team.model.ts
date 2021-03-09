@@ -9,7 +9,6 @@ export class Team {
     public projects: Project[];
 
     constructor(props: {}, flag: boolean = true) {
-        console.log(props);
         this.id = props['id'] ?? null;
         this.name = props['name'] ?? null;
         this.leader = new User(props['leader'] ?? {});

@@ -1,11 +1,123 @@
-<div class="flex flex-col">
-    <div>
-        Naglowek
-    </div>
-    <div class="flex justify-between">
-        Wiersz
-        <div>Kolumna</div>
-        <div>Kolumna</div>
-        <div>Kolumna</div>
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div *ngIf="!isLoading">
+    <div class="flex flex-col lg:flex-col">
+        <div>
+            <h2 class="font-extrabold text-6xl text-center mb-8">
+                {{ project.name }}
+            </h2>
+
+            <form *ngIf="isAddMode" (submit)="onSave()" class="p-4 w-4/6 m-auto mb-4 bg-gray-700 bg-opacity-60 border-2 border-black rounded-2xl transition-all duration-500" [formGroup]="taskForm">
+                <h3 class="text-5xl italic text-center mb-4">Add a task!</h3>
+                <div class="flex flex-col lg:flex-row justify-around mb-4">
+                    <div class="flex flex-col">
+                        <div class="flex flex-col">
+                            <label for="">Name</label>
+                            <input formControlName="name" type="text" name="" id="">
+                        </div>
+                        <div>
+                            <label for="">User</label>
+                            <ng-select [items]="users" formControlName="user" bindLabel="name" bindValue="id"></ng-select>
+                        </div>
+                        <div>
+                            <label for="">Type</label>
+                            <ng-select [items]="['Feature', 'Bug']" formControlName="type"></ng-select>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="">Description</label>
+                        <textarea formControlName="description" name="" id="" cols="30" rows="6"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <button type="submit" class="block w-2/6 mx-auto bg-gray-700 text-white ring-2 ring-white">Add</button>
+                    <button type="button" (click)="closeForm()" class="block w-2/6 mx-auto bg-red-700 text-white ring-2 ring-white">Cancel</button>
+                </div>
+            </form>
+
+            <form *ngIf="isEditMode" class="p-4 w-4/6 m-auto mb-4 bg-gray-700 bg-opacity-60 border-2 border-black rounded-2xl transition-all duration-500" [formGroup]="taskEditForm">
+                <input type="hidden" formControlName="id">
+                <h3 class="text-5xl italic text-center mb-4">Update a task!</h3>
+                <div class="flex flex-col lg:flex-row justify-around mb-4">
+                    <div class="flex flex-col">
+                        <div class="flex flex-col">
+                            <label for="">Name</label>
+                            <input formControlName="editName" type="text" name="" id="">
+                        </div>
+                        <div>
+                            <label for="">User</label>
+                            <ng-select [items]="users" formControlName="editUser" bindLabel="name" bindValue="id"></ng-select>
+                        </div>
+                        <div>
+                            <label for="">Type</label>
+                            <ng-select [items]="['Feature', 'Bug']" formControlName="editType"></ng-select>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="">Description</label>
+                        <textarea formControlName="editDescription" name="" id="" cols="30" rows="6"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-between">
+                    <button type="submit" class="block w-2/6 mx-auto bg-gray-700 text-white ring-2 ring-white">Update</button>
+                    <button type="button" (click)="closeForm()" class="block w-2/6 mx-auto bg-red-700 text-white ring-2 ring-white">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="flex flex-col xl:flex-row justify-between">
+            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-80 rounded-xl mr-4 xl:w-1/4">
+                <h2 class="text-3xl italic mb-6">
+                    General info
+                </h2>
+                <p>Description: {{ project.description }}</p>
+                <p>Time frame: {{ project.startDate | date}} - {{ project.finishDate | date}}</p>
+                <p>Responsible team: {{ project.team.name }}</p>
+                <p>Team leader: {{ project.team.leader.name }}</p>
+                <p>
+                    Contact:
+                    {{ project.team.leader.email }}
+                </p>
+            </div>
+            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-95 rounded-xl mr-4 xl:w-1/2">
+                <h2 class="text-3xl italic mb-6">
+                    Activity
+                </h2>
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus aliquam minus, quisquam exercitationem vitae hic odio rerum provident aperiam incidunt, a sit autem velit nisi illo reiciendis quidem ex eos.
+                    Iste cupiditate repudiandae, eveniet deserunt voluptas aliquam expedita dolor similique temporibus inventore quis dolorem maiores aliquid ex pariatur dicta non error harum perferendis voluptates praesentium accusamus, molestias, qui explicabo. Ipsum.
+                    Cumque, quasi. Officia ducimus ex tempore error vel, pariatur consectetur totam dolore incidunt nemo, et voluptatibus doloribus neque. Ad unde libero, eligendi nisi necessitatibus dignissimos! Aperiam, consequuntur reiciendis. Mollitia, sint.
+                    Qui ratione quisquam pariatur odit, maxime laudantium minus libero necessitatibus asperiores saepe, consequuntur inventore eveniet repudiandae nesciunt quaerat dolorum aspernatur, beatae natus maiores hic perspiciatis. Atque qui alias veritatis perspiciatis.
+                </p>
+            </div>
+
+            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-80 rounded-xl mr-4 xl:w-1/4">
+                <div class="flex justify-between mb-2 items-baseline">
+                    <h2 class="text-2xl italic mb-6">
+                        Active tasks[{{ tasks.length! }}]
+                    </h2>
+                    <button (click)="isAddMode = true;" type="button" class="bg-gray-900 p-4 bg-opacity-75 ring-4 ring-cyan-600 text-base">Add Task!</button>
+                </div>
+                <div [ngClass]="{'bg-red-900': task.type === 'Bug', 'bg-blue-900': task.type === 'Feature'}" *ngFor="let task of tasks" class="border-2 border-gray-500 p-2 bg-opacity-50">
+                    <div class="flex justify-between">
+                        <div>
+                            <h5 class="font-bold text-xl">
+                                {{ task.name }}
+                            </h5>
+                            <h5 class="font-bold text-xl">
+                                [{{ task.type }}]
+                            </h5>
+                            <p>
+                                {{ task.user.name }}
+                            </p>
+                            <p class="italic">
+                                {{ task.description }}
+                            </p>
+                        </div>
+                        <button (click)="onEditMode(task)" type="button" class="bg-gray-900 p-2 bg-opacity-75 ring-4 ring-cyan-600 text-base h-1/2 text-white">
+                            Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

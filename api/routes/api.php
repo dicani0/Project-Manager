@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Manager\ProjectController;
+use App\Http\Controllers\Manager\TaskController;
 use App\Http\Controllers\Manager\TeamController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('projects', [ProjectController::class, 'index']);
     Route::patch('projects/update', [ProjectController::class, 'update']);
     Route::get('projects/{id}', [ProjectController::class, 'show'])->where('id', '[0-9]+');
+
+    Route::post('tasks/store', [TaskController::class, 'store']);
+    Route::patch('tasks/update', [TaskController::class, 'update']);
+    Route::get('tasks/{projectId}', [TaskController::class, 'getTasksForProject']);
 });
 
 

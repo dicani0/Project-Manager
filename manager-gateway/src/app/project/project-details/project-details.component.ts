@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs/operators';
-import { TeamService } from 'src/app/team/team.service';
 import { Project } from '../project.model';
 import { ProjectService } from '../project.service';
 
