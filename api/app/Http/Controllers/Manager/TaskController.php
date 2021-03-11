@@ -13,14 +13,10 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getTasksForProject(int $projectId)
+    public function getTasksForProject(Request $request)
     {
-        return response()
-            ->json(
-                Task::where('project_id', $projectId)
-                    ->get()
-                    ->load('user')
-            );
+        $tasks = Task::where('project_id', $request->project)->limit(5)->offset($request->offset)->get()->load('user');
+        return response()->json($tasks);
     }
 
     /**

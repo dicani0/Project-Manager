@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('tasks/store', [TaskController::class, 'store']);
     Route::patch('tasks/update', [TaskController::class, 'update']);
-    Route::get('tasks/{projectId}', [TaskController::class, 'getTasksForProject']);
+    Route::get('tasks', [TaskController::class, 'getTasksForProject']);
 });
 
 

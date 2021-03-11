@@ -18,7 +18,10 @@ import { Task } from '../task/task.model';
 export class ProjectViewComponent implements OnInit {
     id: number;
     project: Project;
+    project$: Observable<Project>;
+    tasks$: Observable<Task[]>;
     users: User[];
+    page: number;
     tasks: Task[];
     isLoading: boolean;
     isAddMode: boolean;
@@ -31,6 +34,7 @@ export class ProjectViewComponent implements OnInit {
     });
 
     taskEditForm = this.fb.group({
+        id: ['', Validators.required],
         editName: ['', Validators.required],
         editUser: [],
         editType: [, Validators.required],
@@ -46,6 +50,7 @@ export class ProjectViewComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.page = 0;
         this.isAddMode = false;
         this.isEditMode = false;
         this.isLoading = true;
@@ -54,33 +59,27 @@ export class ProjectViewComponent implements OnInit {
 
         this.route.params.subscribe(params => {
             this.id = +params['id'];
-            this.projectService.getProject(+params['id']).subscribe(project => {
-                this.project = project
-                this.taskService.getTasks(this.project.id).subscribe(tasks => this.tasks = tasks);
-                this.isLoading = false;
-            });
+            this.project$ = this.projectService.getProject(this.id);
+            this.tasks$ = this.taskService.getTasks(this.id, this.page * 5);
         })
-
-        this.taskService.taskAdded$.subscribe(() => {
-            this.taskService.getTasks(this.project.id).subscribe(tasks => this.tasks = tasks);
-        })
-
     }
 
     onSave() {
         this.taskService.storeTask(
             this.taskForm.value.name,
             this.taskForm.value.description,
-            this.project.id,
+            this.id,
             this.taskForm.value.type,
             this.taskForm.value.user
         ).subscribe(() => {
-            this.taskService.taskAdded$.next(true);
+            this.taskForm.reset()
+            this.project$ = this.projectService.getProject(this.id);
             this.isAddMode = false;
         });
     }
 
     onEditMode(task: Task) {
+        this.isAddMode = false;
         this.isEditMode = true;
         this.taskEditForm.patchValue({
             id: task.id,
@@ -98,10 +97,26 @@ export class ProjectViewComponent implements OnInit {
             this.taskEditForm.value.editDescription,
             this.taskEditForm.value.editType,
             this.taskEditForm.value.editUser
-        ).subscribe();
+        ).subscribe(() => {
+            this.taskEditForm.reset()
+            this.project$ = this.projectService.getProject(this.id);
+        });
     }
 
     closeForm() {
         this.isAddMode = false;
+        this.isEditMode = false;
+    }
+
+    nextTasksPage() {
+        this.page++;
+        let offset = this.page * 5;
+        this.tasks$ = this.taskService.getTasks(this.id, offset);
+    }
+
+    previousTasksPage() {
+        this.page = Math.max(0, this.page - 1);
+        let offset = this.page * 5;
+        this.tasks$ = this.taskService.getTasks(this.id, offset);
     }
 }

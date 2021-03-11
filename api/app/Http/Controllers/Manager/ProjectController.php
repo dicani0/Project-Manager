@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return response()->json(Project::all()->load('team'));
+        return response()->json(Project::all()->load(['team']));
     }
 
     /**
@@ -37,7 +37,18 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return response()->json(Project::find($id)->load('team'));
+        $project = Project::find($id)->load([
+            'team',
+            'tasks' => function ($query) {
+                return $query->take(5);
+            },
+            'tasks.user'
+        ]);
+        $amount = $project->tasks()->count();
+        $project->amount = $amount;
+
+        // return response()->json([$project, 'amount' => $amount]);
+        return response()->json($project);
     }
 
     /**

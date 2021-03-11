@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -34,8 +34,14 @@ export class TaskService {
         })
     }
 
-    getTasks(projectId: number) {
-        return this.http.get<Task[]>(environment.baseUrl + 'tasks/' + projectId)
+    getTasks(projectId: number, offset: number) {
+        let params = new HttpParams()
+            .set('project', projectId.toString())
+            .set('offset', offset.toString());
+
+        return this.http.get<Task[]>(environment.baseUrl + 'tasks', {
+            params
+        })
             .pipe(
                 map(tasks => {
                     return tasks.map(task => new Task(task));

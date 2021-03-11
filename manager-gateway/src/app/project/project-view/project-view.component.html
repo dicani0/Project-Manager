@@ -1,5 +1,7 @@
-<app-spinner *ngIf="isLoading"></app-spinner>
-<div *ngIf="!isLoading">
+<ng-template #spinner>
+    <app-spinner></app-spinner>
+</ng-template>
+<div *ngIf="project$ | async as project; else spinner">
     <div class="flex flex-col lg:flex-col">
         <div>
             <h2 class="font-extrabold text-6xl text-center mb-8">
@@ -12,7 +14,7 @@
                     <div class="flex flex-col">
                         <div class="flex flex-col">
                             <label for="">Name</label>
-                            <input formControlName="name" type="text" name="" id="">
+                            <input formControlName="name" type="text" name="">
                         </div>
                         <div>
                             <label for="">User</label>
@@ -25,7 +27,7 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="">Description</label>
-                        <textarea formControlName="description" name="" id="" cols="30" rows="6"></textarea>
+                        <textarea formControlName="description" name="" cols="30" rows="6"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-between">
@@ -34,14 +36,14 @@
                 </div>
             </form>
 
-            <form *ngIf="isEditMode" class="p-4 w-4/6 m-auto mb-4 bg-gray-700 bg-opacity-60 border-2 border-black rounded-2xl transition-all duration-500" [formGroup]="taskEditForm">
+            <form (submit)="onUpdate()" *ngIf="isEditMode" class="p-4 w-4/6 m-auto mb-4 bg-gray-700 bg-opacity-60 border-2 border-black rounded-2xl transition-all duration-500" [formGroup]="taskEditForm">
                 <input type="hidden" formControlName="id">
                 <h3 class="text-5xl italic text-center mb-4">Update a task!</h3>
                 <div class="flex flex-col lg:flex-row justify-around mb-4">
                     <div class="flex flex-col">
                         <div class="flex flex-col">
                             <label for="">Name</label>
-                            <input formControlName="editName" type="text" name="" id="">
+                            <input formControlName="editName" type="text" name="">
                         </div>
                         <div>
                             <label for="">User</label>
@@ -54,7 +56,7 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="">Description</label>
-                        <textarea formControlName="editDescription" name="" id="" cols="30" rows="6"></textarea>
+                        <textarea formControlName="editDescription" name="" cols="30" rows="6"></textarea>
                     </div>
                 </div>
                 <div class="flex justify-between">
@@ -92,11 +94,11 @@
             <div class="p-4 shadow-custom bg-gray-900 bg-opacity-80 rounded-xl mr-4 xl:w-1/4">
                 <div class="flex justify-between mb-2 items-baseline">
                     <h2 class="text-2xl italic mb-6">
-                        Active tasks[{{ tasks.length! }}]
+                        Active tasks[{{ project.taskAmount! }}]
                     </h2>
-                    <button (click)="isAddMode = true;" type="button" class="bg-gray-900 p-4 bg-opacity-75 ring-4 ring-cyan-600 text-base">Add Task!</button>
+                    <button (click)="isAddMode = true; isEditMode = false;" type="button" class="bg-gray-900 p-4 bg-opacity-75 ring-4 ring-cyan-600 text-base">Add Task!</button>
                 </div>
-                <div [ngClass]="{'bg-red-900': task.type === 'Bug', 'bg-blue-900': task.type === 'Feature'}" *ngFor="let task of tasks" class="border-2 border-gray-500 p-2 bg-opacity-50">
+                <div [ngClass]="{'bg-red-900': task.type === 'Bug', 'bg-blue-900': task.type === 'Feature'}" *ngFor="let task of tasks$ | async;" class="border-2 border-gray-500 p-2 bg-opacity-50">
                     <div class="flex justify-between">
                         <div>
                             <h5 class="font-bold text-xl">
@@ -116,6 +118,14 @@
                             Edit
                         </button>
                     </div>
+                </div>
+                <div class="flex justify-around mt-2">
+                    <button class="px-4 py-2 bg-cyan-900 border-2 border-white rounded-3xl focus:outline-none active:outline-none" *ngIf="page > 0" (click)="previousTasksPage()">
+                        &larr; Previous
+                    </button>
+                    <button class="px-4 py-2 bg-cyan-900 border-2 border-white rounded-3xl focus:outline-none active:outline-none" *ngIf="(page+1)*5 < project.taskAmount" (click)="nextTasksPage()">
+                        Next &rarr;
+                    </button>
                 </div>
             </div>
         </div>

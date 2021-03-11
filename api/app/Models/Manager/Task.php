@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Task extends Model
 {
     protected $guarded = [];
+    // protected $with = ['user'];
 
     use HasFactory;
     use SoftDeletes;
