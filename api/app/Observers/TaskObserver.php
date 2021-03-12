@@ -3,9 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Manager\Project;
-use App\Models\Manager\ProjectHistory;
 use App\Models\Manager\Task;
-use Illuminate\Support\Facades\Log;
 
 class TaskObserver
 {

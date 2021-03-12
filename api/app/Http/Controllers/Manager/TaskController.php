@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use App\Models\Manager\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -76,5 +77,11 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+
+    public function userTasks()
+    {
+        $tasks = Task::where('user_id', Auth::user()->id)->get();
+        return response()->json($tasks);
     }
 }

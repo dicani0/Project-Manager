@@ -8,6 +8,7 @@
                 {{ project.name }}
             </h2>
 
+            <!-- ADD FORM -->
             <form *ngIf="isAddMode" (submit)="onSave()" class="p-4 w-4/6 m-auto mb-4 bg-gray-700 bg-opacity-60 border-2 border-black rounded-2xl transition-all duration-500" [formGroup]="taskForm">
                 <h3 class="text-5xl italic text-center mb-4">Add a task!</h3>
                 <div class="flex flex-col lg:flex-row justify-around mb-4">
@@ -36,6 +37,7 @@
                 </div>
             </form>
 
+            <!-- EDIT FORM -->
             <form (submit)="onUpdate()" *ngIf="isEditMode" class="p-4 w-4/6 m-auto mb-4 bg-gray-700 bg-opacity-60 border-2 border-black rounded-2xl transition-all duration-500" [formGroup]="taskEditForm">
                 <input type="hidden" formControlName="id">
                 <h3 class="text-5xl italic text-center mb-4">Update a task!</h3>
@@ -65,40 +67,42 @@
                 </div>
             </form>
         </div>
+
+        <!-- GENERAL INFO -->
         <div class="flex flex-col xl:flex-row justify-between">
-            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-80 rounded-xl mr-4 xl:w-1/4">
+            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-80 rounded-xl mr-4 xl:w-3/12">
                 <h2 class="text-3xl italic mb-6">
                     General info
                 </h2>
-                <p>Description: {{ project.description }}</p>
-                <p>Time frame: {{ project.startDate | date}} - {{ project.finishDate | date}}</p>
-                <p>Responsible team: {{ project.team.name }}</p>
-                <p>Team leader: {{ project.team.leader.name }}</p>
+                <p class="border-b-2 border-gray-600 py-2 mb-1">Description: {{ project.description }}</p>
+                <p class="border-b-2 border-gray-600 py-2 mb-1">Time frame: {{ project.startDate | date}} - {{ project.finishDate | date}}</p>
+                <p class="border-b-2 border-gray-600 py-2 mb-1">Responsible team: {{ project.team.name }}</p>
+                <p class="border-b-2 border-gray-600 py-2 mb-1">Team leader: {{ project.team.leader.name }}</p>
                 <p>
                     Contact:
                     {{ project.team.leader.email }}
                 </p>
             </div>
-            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-95 rounded-xl mr-4 xl:w-1/2">
+
+            <!-- HISTORY -->
+            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-95 rounded-xl mr-4 xl:w-5/12">
                 <h2 class="text-3xl italic mb-6">
-                    Activity
+                    History
                 </h2>
-                <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus aliquam minus, quisquam exercitationem vitae hic odio rerum provident aperiam incidunt, a sit autem velit nisi illo reiciendis quidem ex eos.
-                    Iste cupiditate repudiandae, eveniet deserunt voluptas aliquam expedita dolor similique temporibus inventore quis dolorem maiores aliquid ex pariatur dicta non error harum perferendis voluptates praesentium accusamus, molestias, qui explicabo. Ipsum.
-                    Cumque, quasi. Officia ducimus ex tempore error vel, pariatur consectetur totam dolore incidunt nemo, et voluptatibus doloribus neque. Ad unde libero, eligendi nisi necessitatibus dignissimos! Aperiam, consequuntur reiciendis. Mollitia, sint.
-                    Qui ratione quisquam pariatur odit, maxime laudantium minus libero necessitatibus asperiores saepe, consequuntur inventore eveniet repudiandae nesciunt quaerat dolorum aspernatur, beatae natus maiores hic perspiciatis. Atque qui alias veritatis perspiciatis.
-                </p>
+                <div *ngFor="let record of project.history">
+                    <pre class="p-2 mb-2 rounded-2xl bg-gray-700 bg-opacity-70 border-2 border-gray-500 whitespace-pre-wrap">{{ record.details }}</pre>
+                </div>
             </div>
 
-            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-80 rounded-xl mr-4 xl:w-1/4">
+            <!-- TASKS -->
+            <div class="p-4 shadow-custom bg-gray-900 bg-opacity-80 rounded-xl mr-4 xl:w-4/12">
                 <div class="flex justify-between mb-2 items-baseline">
                     <h2 class="text-2xl italic mb-6">
-                        Active tasks[{{ project.taskAmount! }}]
+                        Tasks[{{ project.taskAmount! }}]
                     </h2>
                     <button (click)="isAddMode = true; isEditMode = false;" type="button" class="bg-gray-900 p-4 bg-opacity-75 ring-4 ring-cyan-600 text-base">Add Task!</button>
                 </div>
-                <div [ngClass]="{'bg-red-900': task.type === 'Bug', 'bg-blue-900': task.type === 'Feature'}" *ngFor="let task of tasks$ | async;" class="border-2 border-gray-500 p-2 bg-opacity-50">
+                <div [ngClass]="{'bg-red-900': task.type === 'Bug', 'bg-blue-900': task.type === 'Feature'}" *ngFor="let task of tasks$ | async;" class="min-h-180 border-2 border-gray-500 p-2 bg-opacity-50">
                     <div class="flex justify-between">
                         <div>
                             <h5 class="font-bold text-xl">
@@ -114,11 +118,18 @@
                                 {{ task.description }}
                             </p>
                         </div>
-                        <button (click)="onEditMode(task)" type="button" class="bg-gray-900 p-2 bg-opacity-75 ring-4 ring-cyan-600 text-base h-1/2 text-white">
-                            Edit
-                        </button>
+                        <div class="flex flex-col">
+                            <button (click)="onEditMode(task)" type="button" class="bg-gray-900 mb-4 p-2 bg-opacity-75 ring-4 ring-cyan-600 text-base h-1/2 text-white rounded-full">
+                                Edit
+                            </button>
+                            <button (click)="onEditMode(task)" type="button" class="bg-gray-900 p-2 bg-opacity-75 ring-4 ring-green-600 text-base h-1/2 text-white rounded-full">
+                                Close
+                            </button>
+                        </div>
                     </div>
                 </div>
+
+                <!-- NAVIGATION -->
                 <div class="flex justify-around mt-2">
                     <button class="px-4 py-2 bg-cyan-900 border-2 border-white rounded-3xl focus:outline-none active:outline-none" *ngIf="page > 0" (click)="previousTasksPage()">
                         &larr; Previous

@@ -3,6 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Manager\Project;
+use App\Models\Manager\ProjectHistory;
+use Illuminate\Support\Facades\Log;
 
 class ProjectObserver
 {
@@ -23,9 +25,21 @@ class ProjectObserver
      * @param  \App\Models\Project  $project
      * @return void
      */
-    public function updated(Project $project)
+    public function updating(Project $project)
     {
-        //
+        $changes = "";
+        $originalProject = $project->getOriginal();
+
+        foreach ($originalProject as $key => $value) {
+            if ($originalProject[$key] != $project->$key) {
+                $changes .= "> Updated " . $key . ". Old value: " . $originalProject[$key] . " New value: " . $project->$key . "\r\n";
+            }
+        }
+
+        ProjectHistory::create([
+            'project_id' => $project->id,
+            'details' => $changes
+        ]);
     }
 
     /**

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { finalize, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Task } from '../project/task/task.model';
 
@@ -31,7 +31,7 @@ export class TaskService {
             description: description,
             type: type,
             user_id: userId
-        })
+        });
     }
 
     getTasks(projectId: number, offset: number) {
@@ -47,5 +47,9 @@ export class TaskService {
                     return tasks.map(task => new Task(task));
                 })
             )
+    }
+
+    getUserTasks() {
+        return this.http.get<Task[]>(environment.baseUrl + 'tasks/user').pipe();
     }
 }

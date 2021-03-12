@@ -5,6 +5,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { LoggedInAuthGuard } from './auth/logged-in-auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectDetailsComponent } from './project/project-details/project-details.component';
+import { ProjectFormComponent } from './project/project-form/project-form.component';
 import { ProjectViewComponent } from './project/project-view/project-view.component';
 import { ProjectComponent } from './project/project.component';
 import { TeamComponent } from './team/team.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
     {
         path: 'projects', component: ProjectComponent, canActivate: [LoggedInAuthGuard], children: [
             { path: 'project-details/:id', component: ProjectDetailsComponent, canActivate: [LoggedInAuthGuard] },
+            { path: 'add', component: ProjectFormComponent, canActivate: [LoggedInAuthGuard] },
         ]
     },
 ];

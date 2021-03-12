@@ -11,6 +11,7 @@ export class Project {
     team: Team;
     tasks: Task[];
     taskAmount: number;
+    history: [];
 
     constructor(props, flag: boolean = true) {
         this.taskAmount = props['amount'];
@@ -25,5 +26,9 @@ export class Project {
         for (let index in tasks) {
             this.tasks.push(new Task(tasks[index]));
         }
+        this.history = props['history'] ?? [];
+        // for (let index in props) {
+        //     this.history.push({ details: props[index].details })
+        // }
     }
 }

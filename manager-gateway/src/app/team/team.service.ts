@@ -26,7 +26,6 @@ export class TeamService {
                     }
                 )
             ).subscribe(teams => {
-                console.log(teams);
                 this.teams = teams.slice();
                 this.teams$.next(this.teams);
             });

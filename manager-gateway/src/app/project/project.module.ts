@@ -9,13 +9,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { ProjectViewComponent } from './project-view/project-view.component';
+import { UserProjectsComponent } from './user-projects/user-projects.component';
+import { UserTasksComponent } from './task/user-tasks/user-tasks.component';
 
 @NgModule({
     declarations: [
         ProjectComponent,
         ProjectDetailsComponent,
         ProjectFormComponent,
-        ProjectViewComponent
+        ProjectViewComponent,
+        UserProjectsComponent,
+        UserTasksComponent
     ],
     imports: [
         CommonModule,
@@ -25,6 +29,10 @@ import { ProjectViewComponent } from './project-view/project-view.component';
         FormsModule,
         ReactiveFormsModule,
         NgSelectModule,
+    ],
+    exports: [
+        UserProjectsComponent,
+        UserTasksComponent
     ]
 })
 export class ProjectModule { }

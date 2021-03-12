@@ -17,6 +17,7 @@ class CreateProjectHistoryTable extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained('projects');
             $table->text('details');
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

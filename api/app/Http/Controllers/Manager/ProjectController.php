@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Manager;
 use App\Http\Controllers\Controller;
 use App\Models\Manager\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProjectController extends Controller
 {
@@ -26,7 +28,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $project = Project::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'team_id' => $request->team,
+            'start_date' => $request->start_date,
+            'finish_date' => $request->finish_date
+        ]);
+        return response()->json($project);
     }
 
     /**
@@ -38,11 +47,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::find($id)->load([
-            'team',
-            'tasks' => function ($query) {
-                return $query->take(5);
-            },
-            'tasks.user'
+            'team', 'history'
         ]);
         $amount = $project->tasks()->count();
         $project->amount = $amount;
@@ -80,5 +85,17 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         //
+    }
+
+    public function userProjects()
+    {
+        $projects = Project::whereHas('team', function ($q) {
+            $q->whereHas('members', function ($q2) {
+                $q2->where('user_id', Auth::user()->id);
+            });
+        })
+            ->get();
+
+        return response()->json($projects);
     }
 }

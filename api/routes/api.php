@@ -36,12 +36,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     Route::get('projects', [ProjectController::class, 'index']);
+    Route::post('projects/store', [ProjectController::class, 'store']);
     Route::patch('projects/update', [ProjectController::class, 'update']);
     Route::get('projects/{id}', [ProjectController::class, 'show'])->where('id', '[0-9]+');
+    Route::get('projects/user', [ProjectController::class, 'userProjects'])->where('id', '[0-9]+');
 
     Route::post('tasks/store', [TaskController::class, 'store']);
     Route::patch('tasks/update', [TaskController::class, 'update']);
     Route::get('tasks', [TaskController::class, 'getTasksForProject']);
+    Route::get('tasks/user', [TaskController::class, 'userTasks']);
 });
 
 

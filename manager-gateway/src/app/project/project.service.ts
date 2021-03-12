@@ -42,10 +42,24 @@ export class ProjectService {
             name: name,
             description: description,
             team: teamId,
-            start_date: sDate.format('YYYY-MM-DD HH:mm'),
-            finish_date: fDate.format('YYYY-MM-DD HH:mm')
+            start_date: sDate.format('YYYY-MM-DD HH:mm:ss'),
+            finish_date: fDate.format('YYYY-MM-DD HH:mm:ss')
         })
             .subscribe(() => this.projectUpdated());
+    }
+
+    storeProject(name: string, description: string, teamId: number, sDate: Moment, fDate: Moment) {
+        this.http.post<Project>(environment.baseUrl + 'projects/store', {
+            name: name,
+            description: description,
+            team: teamId,
+            start_date: sDate.format('YYYY-MM-DD HH:mm:ss'),
+            finish_date: fDate.format('YYYY-MM-DD HH:mm:ss')
+        }).subscribe(() => this.projectUpdated());
+    }
+
+    getUserProjects() {
+        return this.http.get<Project[]>(environment.baseUrl + 'projects/user/');
     }
 
     updatedEventEmitter() {
