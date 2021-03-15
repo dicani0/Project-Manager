@@ -1,5 +1,5 @@
 <app-mini-spinner *ngIf="isLoading"></app-mini-spinner>
-<div *ngIf="!isLoading" class="bg-gray-900 bg-opacity-95 mt-16 p-5 border-2 border-white rounded-lg">
+<div *ngIf="!isLoading && !editMode" class="bg-gray-900 bg-opacity-95 mt-16 p-5 border-2 border-white rounded-lg">
     <div class="flex justify-between">
         <h3 class="text-4xl mb-8 font-mono">{{ project.name }}</h3>
         <button class="p-4 bg-gray-900 text-xl rounded-full border-2 border-cyan-400 outline-none focus:outline-none focus:border-cyan-900" (click)="editMode = !editMode">Edit</button>
@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <div *ngIf="editMode">
-        <app-project-form [project]="project"></app-project-form>
-    </div>
+</div>
+<div *ngIf="editMode">
+    <app-project-form [project]="project"></app-project-form>
 </div>

@@ -1,4 +1,5 @@
-<form (submit)="onSubmit()" [formGroup]="editForm" class="flex flex-col mx-auto">
+<form (submit)="onSubmit()" [formGroup]="editForm" class="flex flex-col mx-auto bg-gray-900 bg-opacity-95 mt-16 p-5 border-2 border-white rounded-lg">
+    <h3 class="text-4xl mb-8 font-mono">{{ project.name }}</h3>
     <label for="name">Name</label>
     <input formControlName="name" type="text" name="name" class="p-2">
     <label for="description">Description</label>

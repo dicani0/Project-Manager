@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { finalize, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { finalize, flatMap, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Task } from '../project/task/task.model';
 
@@ -10,9 +10,12 @@ import { Task } from '../project/task/task.model';
 })
 export class TaskService {
 
-    taskAdded$ = new Subject<boolean>();
+    readonly tasks$: Observable<Task[]>;
+    private readonly tasks = new BehaviorSubject<Task[]>([]);
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+        this.tasks$ = this.tasks.asObservable();
+    }
 
     storeTask(name: string, description: string, projectId: number, type: string, userId: number) {
         return this.http.post(environment.baseUrl + 'tasks/store', {
@@ -21,7 +24,10 @@ export class TaskService {
             project_id: projectId,
             type: type,
             user_id: userId
-        });
+        })
+            .pipe(
+                flatMap(() => this.getUserTasks())
+            );
     }
 
     updateTask(id: number, name: string, description: string, type: string, userId: number) {
@@ -35,21 +41,30 @@ export class TaskService {
     }
 
     getTasks(projectId: number, offset: number) {
-        let params = new HttpParams()
-            .set('project', projectId.toString())
-            .set('offset', offset.toString());
+        const params = {
+            project: `${ projectId }`,
+            offset: `${ offset }`
+        }
 
         return this.http.get<Task[]>(environment.baseUrl + 'tasks', {
             params
-        })
-            .pipe(
-                map(tasks => {
-                    return tasks.map(task => new Task(task));
-                })
-            )
+        });
     }
 
-    getUserTasks() {
-        return this.http.get<Task[]>(environment.baseUrl + 'tasks/user').pipe();
+    getUserTasks(): Observable<Task[]> {
+        return this.http.get<Task[]>(environment.baseUrl + 'tasks/user')
+            .pipe(
+                // map(tasks => tasks.map(task => new Task(task))),
+                tap(tasks => this.updateList(tasks)),
+                tap(() => this.tasks$)
+            );
+    }
+
+    private updateList(tasks: Task[]): void {
+        const ids = tasks.map(task => task.id);
+        this.tasks.next([
+            ...this.tasks.value.filter(({ id }) => !ids.includes(id)),
+            ...tasks
+        ]);
     }
 }
