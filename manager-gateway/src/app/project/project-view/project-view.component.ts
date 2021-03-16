@@ -119,4 +119,11 @@ export class ProjectViewComponent implements OnInit {
         let offset = this.page * 5;
         this.tasks$ = this.taskService.getTasks(this.id, offset);
     }
+
+    closeTask(id: number) {
+        this.taskService.closeTask(id).subscribe(() => {
+            this.project$ = this.projectService.getProject(this.id);
+        }
+        );
+    }
 }

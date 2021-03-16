@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::patch('tasks/update', [TaskController::class, 'update']);
     Route::get('tasks', [TaskController::class, 'getTasksForProject']);
     Route::get('tasks/user', [TaskController::class, 'userTasks']);
+    Route::delete('tasks/delete', [TaskController::class, 'delete']);
 });
 
 

@@ -30,6 +30,17 @@ export class TaskService {
             );
     }
 
+    closeTask(id: number) {
+        const params = {
+            id: `${ id }`,
+
+        }
+        return this.http.delete(environment.baseUrl + 'tasks/delete', { params })
+            .pipe(
+                flatMap(() => this.getUserTasks())
+            );
+    }
+
     updateTask(id: number, name: string, description: string, type: string, userId: number) {
         return this.http.patch(environment.baseUrl + 'tasks/update', {
             id: id,
@@ -54,17 +65,8 @@ export class TaskService {
     getUserTasks(): Observable<Task[]> {
         return this.http.get<Task[]>(environment.baseUrl + 'tasks/user')
             .pipe(
-                // map(tasks => tasks.map(task => new Task(task))),
-                tap(tasks => this.updateList(tasks)),
-                tap(() => this.tasks$)
+                tap(tasks => this.tasks.next(tasks))
             );
     }
 
-    private updateList(tasks: Task[]): void {
-        const ids = tasks.map(task => task.id);
-        this.tasks.next([
-            ...this.tasks.value.filter(({ id }) => !ids.includes(id)),
-            ...tasks
-        ]);
-    }
 }

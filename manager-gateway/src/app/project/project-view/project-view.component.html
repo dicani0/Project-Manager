@@ -90,7 +90,12 @@
                     History
                 </h2>
                 <div *ngFor="let record of project.history">
-                    <pre class="p-2 mb-2 rounded-2xl bg-gray-700 bg-opacity-70 border-2 border-gray-500 whitespace-pre-wrap">{{ record.details }}</pre>
+                    <p class="p-2 mb-2 rounded-2xl bg-gray-700 bg-opacity-70 border-2 border-gray-500 whitespace-pre-wrap">
+                        {{ record.details }}
+                        <br>
+                        {{ record.created_at | date: 'short' }}
+                    </p>
+
                 </div>
             </div>
 
@@ -122,7 +127,7 @@
                             <button (click)="onEditMode(task)" type="button" class="bg-gray-900 mb-4 p-2 bg-opacity-75 ring-4 ring-cyan-600 text-base h-1/2 text-white rounded-full">
                                 Edit
                             </button>
-                            <button (click)="onEditMode(task)" type="button" class="bg-gray-900 p-2 bg-opacity-75 ring-4 ring-green-600 text-base h-1/2 text-white rounded-full">
+                            <button (click)="closeTask(task.id)" type="button" class="bg-gray-900 p-2 bg-opacity-75 ring-4 ring-green-600 text-base h-1/2 text-white rounded-full">
                                 Close
                             </button>
                         </div>
